@@ -7,20 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaDatos;
+using CapaNegocio;
+using CapaEntidad;
 
 namespace AppUsuarios
 {
     public partial class RecuperarContraseñaForm : Form
     {
-        private List<Usuario> usuarios;
         private Usuario usuarioActual;
         private string codigoGenerado;
 
-        public RecuperarContraseñaForm(List<Usuario> listaUsuarios)
+        public RecuperarContraseñaForm()
         {
             InitializeComponent();
-            usuarios = listaUsuarios;
             txtCodigo.Enabled = false;
             txtNuevaPass.Enabled = false;
             txtConfirmar.Enabled = false;
@@ -30,7 +29,8 @@ namespace AppUsuarios
         private void btnEnviarCodigo_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
-            usuarioActual = usuarios.FirstOrDefault(u => u.Email == email);
+            CN_Usuario cn_usuario = new CN_Usuario();
+            usuarioActual = cn_usuario.ObtenerPorEmail(email);
 
             if (usuarioActual == null)
             {
@@ -69,9 +69,18 @@ namespace AppUsuarios
             }
 
             usuarioActual.Contraseña = txtNuevaPass.Text;
-            MessageBox.Show("Contraseña actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+            CN_Usuario cn_usuario = new CN_Usuario();
+            string resultado = cn_usuario.Editar(usuarioActual);
+
+            if (string.IsNullOrEmpty(resultado))
+            {
+                MessageBox.Show("Contraseña actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(resultado, "Error al guardar la contraseña", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
-
 }

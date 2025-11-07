@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaDatos;
+using CapaNegocio;
+using CapaEntidad;
 
 namespace AppUsuarios
 {
@@ -45,8 +46,19 @@ namespace AppUsuarios
             usuario.Contraseña = txtPassword.Text;
             usuario.EsAdmin = chkEsAdmin.Checked;
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            CN_Usuario cn_usuario = new CN_Usuario();
+            string resultado = cn_usuario.Editar(usuario);
+
+            if (string.IsNullOrEmpty(resultado))
+            {
+                MessageBox.Show("Datos actualizados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(resultado, "Error al guardar en la BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void groupBox1_Resize(object sender, EventArgs e)

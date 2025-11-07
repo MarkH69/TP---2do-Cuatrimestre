@@ -1,2 +1,4 @@
 C:\Users\leanl\source\repos\GestiónUsuariosSolución\CapaPresentación\obj\Debug\CapaPresentación.csproj.AssemblyReference.cache
+C:\Users\leanl\source\repos\GestiónUsuariosSolución\CapaPresentación\obj\Debug\AppUsuarios.AdminForm.resources
+C:\Users\leanl\source\repos\GestiónUsuariosSolución\CapaPresentación\obj\Debug\CapaPresentación.csproj.GenerateResource.cache
 C:\Users\leanl\source\repos\GestiónUsuariosSolución\CapaPresentación\obj\Debug\CapaPresentación.csproj.CoreCompileInputs.cache

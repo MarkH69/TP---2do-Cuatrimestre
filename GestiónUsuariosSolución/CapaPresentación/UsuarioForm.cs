@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
-using CapaDatos;
+using CapaNegocio;
+using CapaEntidad;
 
 namespace AppUsuarios
 {
@@ -29,7 +30,6 @@ namespace AppUsuarios
             txtEmail.Text = usuario.Email;
             txtPassword.Text = usuario.Contraseña;
         }
-
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
@@ -53,18 +53,23 @@ namespace AppUsuarios
                 usuario.Email = txtEmail.Text.Trim();
                 usuario.Contraseña = txtPassword.Text;
 
-                MessageBox.Show("Datos actualizados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CN_Usuario cn_usuario = new CN_Usuario();
+                string resultado = cn_usuario.Editar(usuario);
+
+                if (string.IsNullOrEmpty(resultado))
+                {
+                    MessageBox.Show("Datos actualizados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(resultado, "Error al guardar en la BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
                 MessageBox.Show("La contraseña es incorrecta. Los cambios no se han guardado.", "Verificación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            usuario.NombreUsuario = txtNombre.Text.Trim();
-            usuario.Email = txtEmail.Text.Trim();
-            usuario.Contraseña = txtPassword.Text;
-
-            MessageBox.Show("Datos actualizados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

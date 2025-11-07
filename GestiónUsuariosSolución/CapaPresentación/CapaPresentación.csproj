@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E193A71A-7031-4319-A2C2-8E92C1EB4B12}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaPresentación</RootNamespace>
     <AssemblyName>CapaPresentación</AssemblyName>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -49,6 +53,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AdminForm.Designer.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="EditarUsuarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,14 +77,24 @@
     <Compile Include="VerificacionForm.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
-      <Project>{ece7ce5b-68c0-4f0f-8b0b-7a4f9ba3c5e7}</Project>
-      <Name>CapaDatos</Name>
+    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
+      <Project>{a4c2860d-8389-4852-8696-3999b05bbe36}</Project>
+      <Name>CapaEntidad</Name>
     </ProjectReference>
     <ProjectReference Include="..\CapaNegocio\CapaNegocio.csproj">
       <Project>{81e4bb97-16ca-4bd5-97d8-d0324e644d9c}</Project>
       <Name>CapaNegocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\GestionUsuarios.accdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

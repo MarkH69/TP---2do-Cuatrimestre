@@ -9,6 +9,6 @@ namespace CapaDatos
 {
     public class Conexion
     {
-        public static string cadena = ConfigurationManager.ConnectionStrings["cadena_conexion_access"].ConnectionString;
+        public static string cadena = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\App_Data\GestionUsuarios.accdb";
     }
 }

@@ -7,38 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaDatos;
+using CapaNegocio;
+using CapaEntidad;
 
 namespace AppUsuarios
 {
     public partial class LoginForm : Form
     {
-        private List<Usuario> usuarios;
-
-
         private Usuario usuarioEncontrado;
 
         public LoginForm()
         {
             InitializeComponent();
-
-            usuarios = new List<Usuario>
-    {
-        new Usuario
-        {
-            NombreUsuario = "admin",
-            Email = "admin@gmail.com",
-            Contraseña = "admin123",
-            EsAdmin = true
-        },
-        new Usuario
-        {
-            NombreUsuario = "juan",
-            Email = "juan@gmail.com",
-            Contraseña = "juan123",
-            EsAdmin = false
-        }
-    };
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -64,9 +44,8 @@ namespace AppUsuarios
             }
 
             
-            usuarioEncontrado = usuarios.FirstOrDefault(u =>
-                (u.NombreUsuario == usuarioIngresado || u.Email == usuarioIngresado) &&
-                u.Contraseña == contraseñaIngresada);
+            CN_Usuario cn_usuario = new CN_Usuario();
+            usuarioEncontrado = cn_usuario.Loguear(usuarioIngresado, contraseñaIngresada);
 
             if (usuarioEncontrado == null)
             {
@@ -79,7 +58,7 @@ namespace AppUsuarios
 
             if (usuarioEncontrado.EsAdmin)
             {
-                AdminForm adminForm = new AdminForm(usuarios, usuarioEncontrado);
+                AdminForm adminForm = new AdminForm(usuarioEncontrado);
 
                 this.Hide();
                 adminForm.ShowDialog();
@@ -134,9 +113,8 @@ namespace AppUsuarios
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            RecuperarContraseñaForm recuperarForm = new RecuperarContraseñaForm(usuarios);
+            RecuperarContraseñaForm recuperarForm = new RecuperarContraseñaForm();
             recuperarForm.ShowDialog();
-
         }
 
         private void chkMostrarContraseña_CheckedChanged(object sender, EventArgs e)
